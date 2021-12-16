@@ -22,7 +22,18 @@ typedef struct{
 
 //assinaturas
 int menu();
-int insVeiculo(Veiculo V[fSize],int tamanho,int cod, char tp[50], float ct, int autono);
+int insVeiculo(Veiculo V[vSize],int tamanho,int cod, char tp[50], float ct, int autono);
+
+
+void listv(Veiculo V[vSize],int tamanho){
+    printf("####Veiculos Eletricos####");
+    for(int i=0; i>tamanho;i++){
+        printf("Codigo:%d",V[i].codigo);
+        printf("Tipo:%s",V[i].tipo);
+        printf("Custo:%.2f",V[i].custo);
+        printf("Autonomia:%d",V[i].autonomia);
+    }
+}
 
 //função para inserir veiculo eletrico
 int insVeiculo(Veiculo V[fSize],int tamanho,int cod, char tp[50], float ct, int autono){
@@ -74,16 +85,30 @@ int main(){
         switch(opcao){
             case 1: 
                 printf("#Novo veiculo#\n");
-                rollback:
+                rollback:       //ponto de retorno se o if for verdadeiro!!
                 printf("Inserir codigo:\n");
                 scanf("%d", &codigov);
-                if(codigov<0) goto rollback;
+
+                //validação de input
+                if(codigov<0){
+                    printf("codigo tem de ser a cima de 0!\n");
+                    goto rollback; 
+                };
                 printf("Inserir tipo:\n");
-                scanf("%s", tipov);
+                scanf("%s", tipov);        
                 printf("Inserir custo:\n");
                 scanf("%f", &custov);
+                if(custov<0){
+                    printf("Custo tem de ser a cima de 0!\n");
+                    goto rollback;
+                };
                 printf("Inserir Autonomia:\n");
                 scanf("%d", &autonomiav);
+                if(autonomiav<0){ 
+                    printf("Autonomia tem de ser a cima de 0!\n");
+                    goto rollback;
+                };
+
                 insVeiculo(veiculo ,tamanhov ,codigov, tipov, custov, autonomiav);
                 tamanhov++;
 
@@ -93,6 +118,7 @@ int main(){
             case 4: break;
             case 5: break;
             case 6: break;
+            case 7: break;
         }   
     }while(opcao != 0);
 
