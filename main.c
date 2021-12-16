@@ -23,15 +23,16 @@ typedef struct{
 //assinaturas
 int menu();
 int insVeiculo(Veiculo V[vSize],int tamanho,int cod, char tp[50], float ct, int autono);
+void listv(Veiculo V[vSize],int tamanho);
 
-
+// lista todos os veiculos eletricos 
 void listv(Veiculo V[vSize],int tamanho){
-    printf("####Veiculos Eletricos####");
-    for(int i=0; i>tamanho;i++){
-        printf("Codigo:%d",V[i].codigo);
-        printf("Tipo:%s",V[i].tipo);
-        printf("Custo:%.2f",V[i].custo);
-        printf("Autonomia:%d",V[i].autonomia);
+    printf("####Veiculos Eletricos####\n");
+    for(int i=0; i<tamanho;i++){
+        printf("Codigo:%d\n",V[i].codigo);
+        printf("Tipo:%s\n",V[i].tipo);
+        printf("Custo:%.2f\n",V[i].custo);
+        printf("Autonomia:%d\n",V[i].autonomia);
     }
 }
 
@@ -44,8 +45,6 @@ int insVeiculo(Veiculo V[fSize],int tamanho,int cod, char tp[50], float ct, int 
         V[tamanho].autonomia = autono;
         return(1);
     }else return(0);
-    
-    
 }
 
 //MENU
@@ -78,7 +77,8 @@ int main(){
     int codigov;
     char tipov[50];
     float custov;
-    int autonomiav,tamanhov;
+    int autonomiav = 0;
+    int tamanhov = 0;
 
     do{
         opcao = menu();
@@ -116,7 +116,9 @@ int main(){
             case 2: break;
             case 3: break;
             case 4: break;
-            case 5: break;
+            case 5: 
+            listv(veiculo,tamanhov);
+            break;
             case 6: break;
             case 7: break;
         }   
