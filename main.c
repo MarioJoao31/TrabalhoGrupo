@@ -15,7 +15,7 @@ typedef struct {
 typedef struct{
     int num_ord;
     int NIF[fSize];
-    Veiculo veiculo[3];
+    Veiculo veiculo[vSize];
     int tempo;
     int distancia;
 }  Fatura;
@@ -23,6 +23,7 @@ typedef struct{
 //assinaturas
 int menu();
 int insVeiculo(Veiculo V[vSize],int tamanho,int cod, char tp[50], float ct, int autono);
+int insFatura(Fatura F[fSize],int tamanhoFatura,int n_ord, int nif[50], Veiculo V[vSize] ,int temp, int dist);
 void listv(Veiculo V[vSize],int tamanho);
 int rmVeiculo(Veiculo V[vSize],int tamanho, int cod);
 
@@ -64,6 +65,23 @@ int insVeiculo(Veiculo V[fSize],int tamanho,int cod, char tp[50], float ct, int 
     }else return(0);
 }
 
+//Funçãi inserir fatura 
+int insFatura(Fatura F[fSize],int tamanhof ,int tf ,int n_ord ,char nif[50] , Veiculo V[vSize], int codVeiculo ,int tamanhov,int temp, int dist){
+    if(tf<fSize){
+        F[tf].num_ord = n_ord;
+        F[tf].NIF = nif;
+        //validação de codigo de veiculo
+        for(int i = 0; i<tamanhov ;i++){
+            if(codVeiculo == V[i].codigo){
+                F[tf].veiculo = V[i].codigo;
+            }   
+        }
+        F[tf].tempo = temp;
+        F[tf].distancia = dist;
+        return(1);
+    }else return(0);
+}
+
 //MENU
 int menu(){
     int opcao;
@@ -95,7 +113,7 @@ int main(){
     char tipov[50];
     float custov;
     int autonomiav = 0;
-    int tamanhov = 0;
+    int tamanhov,tamanhof = 0;
 
     do{
         opcao = menu();
