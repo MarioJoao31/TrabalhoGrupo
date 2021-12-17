@@ -24,6 +24,22 @@ typedef struct{
 int menu();
 int insVeiculo(Veiculo V[vSize],int tamanho,int cod, char tp[50], float ct, int autono);
 void listv(Veiculo V[vSize],int tamanho);
+int rmVeiculo(Veiculo V[vSize],int tamanho, int cod);
+
+//remover veiculo eletricos do array
+int rmVeiculo(Veiculo V[vSize],int tamanho, int cod){
+    if(cod <= tamanho){
+        // cod-1 e tamanho-1 para diminuir o tamanho do array 
+        for(int i = cod-1; i<tamanho-1 ;i++){
+            V[i].codigo = V[i+1].codigo;
+            strcpy(V[i].tipo, V[i+1].tipo);
+            V[i].custo = V[i+1].custo;
+            V[i].autonomia = V[i+1].autonomia ;
+        }
+        return(1);
+    }else return(0);
+    
+}
 
 // lista todos os veiculos eletricos 
 void listv(Veiculo V[vSize],int tamanho){
@@ -33,6 +49,7 @@ void listv(Veiculo V[vSize],int tamanho){
         printf("Tipo:%s\n",V[i].tipo);
         printf("Custo:%.2f\n",V[i].custo);
         printf("Autonomia:%d\n",V[i].autonomia);
+        printf("######################\n");
     }
 }
 
@@ -74,7 +91,7 @@ int main(){
     Fatura fatura[fSize];
     Veiculo veiculo[vSize];
     int opcao;
-    int codigov;
+    int codigov,codV,resV;
     char tipov[50];
     float custov;
     int autonomiav = 0;
@@ -113,7 +130,16 @@ int main(){
                 tamanhov++;
 
             break;
-            case 2: break;
+            case 2: 
+                printf("Insira o codigo do Veiculo eletrico que deseja remover:");
+                scanf("%d", &codV);
+                resV = rmVeiculo(veiculo,tamanhov,codV);
+                if(resV==1){
+                    printf("Veiculo eletrico removido com sucesso!\n");
+                    tamanhov--;
+                } else printf("Veiculo eletrico não removido!\n");
+                
+            break;
             case 3: break;
             case 4: break;
             case 5: 
