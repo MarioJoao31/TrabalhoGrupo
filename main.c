@@ -14,8 +14,8 @@ typedef struct {
 
 typedef struct{
     int num_ord;
-    int NIF[fSize];
-    Veiculo veiculo[vSize];
+    int NIF;
+    int veiculo;
     int tempo;
     int distancia;
 }  Fatura;
@@ -23,7 +23,7 @@ typedef struct{
 //assinaturas
 int menu();
 int insVeiculo(Veiculo V[vSize],int tamanho,int cod, char tp[50], float ct, int autono);
-int insFatura(Fatura F[fSize],int tamanhoFatura,int n_ord, int nif[50], Veiculo V[vSize] ,int temp, int dist);
+int insFatura(Fatura F[fSize],int tamanhof ,int n_ord ,int nif , Veiculo V[vSize], int codVeiculo ,int tamanhov,int temp, int dist);
 void listv(Veiculo V[vSize],int tamanho);
 int rmVeiculo(Veiculo V[vSize],int tamanho, int cod);
 
@@ -66,18 +66,19 @@ int insVeiculo(Veiculo V[fSize],int tamanho,int cod, char tp[50], float ct, int 
 }
 
 //Funçãi inserir fatura 
-int insFatura(Fatura F[fSize],int tamanhof ,int tf ,int n_ord ,char nif[50] , Veiculo V[vSize], int codVeiculo ,int tamanhov,int temp, int dist){
-    if(tf<fSize){
-        F[tf].num_ord = n_ord;
-        F[tf].NIF = nif;
+int insFatura(Fatura F[fSize],int tamanhof ,int n_ord ,int nif , Veiculo V[vSize], int codVeiculo ,int tamanhov,int temp, int dist){
+
+    if(tamanhof<fSize){
+        F[tamanhof].num_ord = n_ord;
+        F[tamanhof].NIF = nif;
         //validação de codigo de veiculo
         for(int i = 0; i<tamanhov ;i++){
             if(codVeiculo == V[i].codigo){
-                F[tf].veiculo = V[i].codigo;
+                F[tamanhof].veiculo = V[i].codigo;;
             }   
         }
-        F[tf].tempo = temp;
-        F[tf].distancia = dist;
+        F[tamanhof].tempo = temp;
+        F[tamanhof].distancia = dist;
         return(1);
     }else return(0);
 }
@@ -109,10 +110,11 @@ int main(){
     Fatura fatura[fSize];
     Veiculo veiculo[vSize];
     int opcao;
-    int codigov,codV,resV;
+    int codigov,codV,resV, res3;
     char tipov[50];
     float custov;
     int autonomiav = 0;
+    int nord,nif,cod,temp,dist = 0;
     int tamanhov,tamanhof = 0;
 
     do{
@@ -158,7 +160,23 @@ int main(){
                 } else printf("Veiculo eletrico não removido!\n");
                 
             break;
-            case 3: break;
+            case 3: 
+                printf("Inserir Fatura:\n");
+                printf("NIF:");
+                scanf("%d", &nif);
+                printf("Codigo:");
+                scanf("%d", &cod);
+                printf("tempo:");
+                scanf("%d", &temp);
+                printf("Distância:");
+                scanf("%d", &dist);
+
+                res3 = insFatura(fatura, tamanhof, nord, nif, veiculo, cod, tamanhov, temp, dist);
+                if(res3==1) printf("Inserido com sucesso!\n");
+                    else printf("Fatura não inserida!\n");
+                nord++;
+                tamanhof++;
+            break;
             case 4: break;
             case 5: 
             listv(veiculo,tamanhov);
