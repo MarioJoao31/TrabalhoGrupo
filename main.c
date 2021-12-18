@@ -81,14 +81,10 @@ int insVeiculo(Veiculo V[fSize],int tamanho,int cod, char tp[50], float ct, int 
 int insFatura(Fatura F[fSize],int tamanhof ,int n_ord ,int nif , Veiculo V[vSize], int codVeiculo ,int tamanhov,int temp, int dist){
 
     if(tamanhof<fSize){
+        
         F[tamanhof].num_ord = n_ord;
         F[tamanhof].NIF = nif;
-        //validação de codigo de veiculo
-        for(int i = 0; i<tamanhov ;i++){
-            if(codVeiculo == V[i].codigo){
-                F[tamanhof].veiculo = V[i].codigo;;
-            }   
-        }
+         F[tamanhof].veiculo = codVeiculo;
         F[tamanhof].tempo = temp;
         F[tamanhof].distancia = dist;
         return(1);
@@ -126,14 +122,15 @@ int main(){
     char tipov[50];
     float custov;
     int autonomiav = 0;
-    int nord,nif,cod,temp,dist = 0;
+    int nif,cod,temp,dist = 0;
+    int nord=0;
     int tamanhov,tamanhof = 0;
 
     do{
         opcao = menu();
         switch(opcao){
             case 1: 
-                printf("#Novo veiculo#\n");
+                printf("##Inserir veiculo##\n");
                 rollback:       //ponto de retorno se o if for verdadeiro!!
                 printf("Inserir codigo:\n");
                 scanf("%d", &codigov);
@@ -173,21 +170,34 @@ int main(){
                 
                 break;
             case 3: 
-                printf("Inserir Fatura:\n");
+                printf("##Inserir Fatura##\n");
                 printf("NIF:");
                 scanf("%d", &nif);
+
+                againcodveiculo:
                 printf("Codigo:");
                 scanf("%d", &cod);
+                //verificação se codigo existe 
+                for(int i = 0; i<tamanhov ;i++){
+                if(cod == veiculo[i].codigo){
+                    fatura[tamanhof].veiculo = veiculo[i].codigo;
+                }else {
+                    printf("Não existe este codigo de veiculo eletrico\n");
+                    goto againcodveiculo;
+                } 
+                }
                 printf("tempo:");
                 scanf("%d", &temp);
                 printf("Distância:");
                 scanf("%d", &dist);
+                printf("%dnumord", nord);
 
                 res3 = insFatura(fatura, tamanhof, nord, nif, veiculo, cod, tamanhov, temp, dist);
                 if(res3==1) printf("Inserido com sucesso!\n");
                     else printf("Fatura não inserida!\n");
                 nord++;
                 tamanhof++;
+                printf("%dnumord", nord);
                 break;
             case 4: 
             
