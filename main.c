@@ -54,6 +54,18 @@ void listv(Veiculo V[vSize],int tamanho){
     }
 }
 
+void listf(Fatura F[fSize],int tamanhof){
+    printf("####Faturas####\n");
+    for(int i=0; i<tamanhof;i++){
+        printf("Numero ordem:%d\n",F[i].num_ord);
+        printf("NIF:%d\n",F[i].NIF);
+        printf("Veiculo:%d\n",F[i].veiculo);
+        printf("Tempo:%d\n",F[i].tempo);
+        printf("Distancia:%d\n",F[i].distancia);
+        printf("######################\n");
+    }
+}
+
 //função para inserir veiculo eletrico
 int insVeiculo(Veiculo V[fSize],int tamanho,int cod, char tp[50], float ct, int autono){
     if(tamanho<vSize){
@@ -82,7 +94,7 @@ int insFatura(Fatura F[fSize],int tamanhof ,int n_ord ,int nif , Veiculo V[vSize
         return(1);
     }else return(0);
 }
-
+ 
 //MENU
 int menu(){
     int opcao;
@@ -149,7 +161,7 @@ int main(){
                 insVeiculo(veiculo ,tamanhov ,codigov, tipov, custov, autonomiav);
                 tamanhov++;
 
-            break;
+                break;
             case 2: 
                 printf("Insira o codigo do Veiculo eletrico que deseja remover:");
                 scanf("%d", &codV);
@@ -159,7 +171,7 @@ int main(){
                     tamanhov--;
                 } else printf("Veiculo eletrico não removido!\n");
                 
-            break;
+                break;
             case 3: 
                 printf("Inserir Fatura:\n");
                 printf("NIF:");
@@ -176,13 +188,19 @@ int main(){
                     else printf("Fatura não inserida!\n");
                 nord++;
                 tamanhof++;
-            break;
-            case 4: break;
+                break;
+            case 4: 
+            
+                break;
             case 5: 
             listv(veiculo,tamanhov);
-            break;
-            case 6: break;
-            case 7: break;
+                break;
+            case 6: 
+            listf(fatura,tamanhof);
+                break;
+            case 7: 
+                
+                break;
         }   
     }while(opcao != 0);
 
