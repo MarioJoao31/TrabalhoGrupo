@@ -84,7 +84,7 @@ int insFatura(Fatura F[fSize],int tamanhof ,int n_ord ,int nif , Veiculo V[vSize
         
         F[tamanhof].num_ord = n_ord;
         F[tamanhof].NIF = nif;
-         F[tamanhof].veiculo = codVeiculo;
+        F[tamanhof].veiculo = codVeiculo;
         F[tamanhof].tempo = temp;
         F[tamanhof].distancia = dist;
         return(1);
@@ -110,8 +110,6 @@ int menu(){
     while ((opcao>7)||(opcao<0));
     return(opcao);
 }
-
-
 
 
 int main(){
