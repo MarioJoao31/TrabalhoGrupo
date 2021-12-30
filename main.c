@@ -201,7 +201,7 @@ int main(){
             
                 break;
             case 5: 
-            listv(veiculo,tamanhov);
+               listv(veiculo,tamanhov);
                 break;
             case 6: 
             listf(fatura,tamanhof);
@@ -214,6 +214,4 @@ int main(){
 
     return(0);
 
-}
-
-commit no mario  
+} 
