@@ -22,10 +22,15 @@ typedef struct{
 
 //assinaturas
 int menu();
+
 int insVeiculo(Veiculo V[vSize],int tamanho,int cod, char tp[50], float ct, int autono);
-int insFatura(Fatura F[fSize],int tamanhof ,int n_ord ,int nif , Veiculo V[vSize], int codVeiculo ,int tamanhov,int temp, int dist);
-void listv(Veiculo V[vSize],int tamanho);
 int rmVeiculo(Veiculo V[vSize],int tamanho, int cod);
+void listv(Veiculo V[vSize],int tamanho);
+
+int insFatura(Fatura F[fSize],int tamanhof ,int n_ord ,int nif , Veiculo V[vSize], int codVeiculo ,int tamanhov,int temp, int dist);
+void listf(Fatura F[fSize],int tamanhof);
+
+
 
 //remover veiculo eletricos do array
 int rmVeiculo(Veiculo V[vSize],int tamanho, int cod){
@@ -90,6 +95,19 @@ int insFatura(Fatura F[fSize],int tamanhof ,int n_ord ,int nif , Veiculo V[vSize
         return(1);
     }else return(0);
 }
+
+int rmFatura(Fatura F[fSize],int tamanhof, int cod){
+    if(cod <= tamanhof){
+        for(int i = cod-1; i<tamanhof-1;i++){
+            F[i].num_ord = F[i+1].num_ord;
+            F[i].NIF = F[i+1].NIF;
+            F[i].veiculo = F[i+1].veiculo;
+            F[i].tempo = F[i+1].tempo;
+            F[i].distancia = F[i+1].distancia;
+        }
+        return(1);
+    }else return(0);
+}
  
 //MENU
 int menu(){
@@ -116,7 +134,7 @@ int main(){
     Fatura fatura[fSize];
     Veiculo veiculo[vSize];
     int opcao;
-    int codigov,codV,resV, res3;
+    int codigov,codV,resV, res3, codF, resF;
     char tipov[50];
     float custov;
     int autonomiav = 0;
@@ -191,14 +209,21 @@ int main(){
                 printf("%dnumord", nord);
 
                 res3 = insFatura(fatura, tamanhof, nord, nif, veiculo, cod, tamanhov, temp, dist);
-                if(res3==1) printf("Inserido com sucesso!\n");
-                    else printf("Fatura não inserida!\n");
+                if(res3==1) printf("\nInserido com sucesso!\n");
+                    else printf("\nFatura não inserida!\n");
                 nord++;
                 tamanhof++;
                 printf("%dnumord", nord);
                 break;
             case 4: 
-            
+                printf("Insira o codigo do Veiculo eletrico que deseja remover:");
+                scanf("%d", &codF);
+                resF = rmFatura(fatura,tamanhof,codF);
+                if(resF==1){
+                    printf("Fatura removida com sucesso!\n");
+                    tamanhof--;
+                } else printf("Fatura não removida!\n");
+                
                 break;
             case 5: 
                listv(veiculo,tamanhov);
