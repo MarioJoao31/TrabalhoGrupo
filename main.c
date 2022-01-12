@@ -143,6 +143,8 @@ int main(){
     int nord=0;
     int tamanhov,tamanhof = 0;
     int codF, resF = 0;
+
+
     do{
         opcao = menu();
         switch(opcao){
@@ -200,12 +202,12 @@ int main(){
                 }
                 //verificação se codigo existe 
                 for(int i = 0; i<tamanhov ;i++){
-                if(cod == veiculo[i].codigo){
+                    if(cod == veiculo[i].codigo){
                     fatura[tamanhof].veiculo = veiculo[i].codigo;
-                }else {
-                    printf("Não existe este codigo de veiculo eletrico\n");
-                    goto againcodveiculo;
-                } 
+                    }else {
+                        printf("Não existe este codigo de veiculo eletrico\n");
+                        goto againcodveiculo;
+                    } 
                 }
                 printf("tempo:");
                 scanf("%d", &temp);
@@ -237,7 +239,7 @@ int main(){
                 listf(fatura,tamanhof);
                 break;
             case 7: 
-                
+               
                 break;
         }   
     }while(opcao != 0);
