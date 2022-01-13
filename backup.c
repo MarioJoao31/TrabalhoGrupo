@@ -1,7 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
-#include <locale.h>
 #define fSize 9
 #define vSize 5
 
@@ -23,16 +22,10 @@ typedef struct{
 
 //assinaturas
 int menu();
-
 int insVeiculo(Veiculo V[vSize],int tamanho,int cod, char tp[50], float ct, int autono);
-int rmVeiculo(Veiculo V[vSize],int tamanho, int cod);
-void listv(Veiculo V[vSize],int tamanho);
-
 int insFatura(Fatura F[fSize],int tamanhof ,int n_ord ,int nif , Veiculo V[vSize], int codVeiculo ,int tamanhov,int temp, int dist);
-int rmFatura(Fatura F[fSize],int tamanhof, int cod);
-void listf(Fatura F[fSize],int tamanhof);
-
-
+void listv(Veiculo V[vSize],int tamanho);
+int rmVeiculo(Veiculo V[vSize],int tamanho, int cod);
 
 //remover veiculo eletricos do array
 int rmVeiculo(Veiculo V[vSize],int tamanho, int cod){
@@ -97,19 +90,6 @@ int insFatura(Fatura F[fSize],int tamanhof ,int n_ord ,int nif , Veiculo V[vSize
         return(1);
     }else return(0);
 }
-
-int rmFatura(Fatura F[fSize],int tamanhof, int codf){
-    if(codf <= tamanhof){
-        for(int i = codf-1; i<tamanhof-1;i++){
-            F[i].num_ord = F[i+1].num_ord;
-            F[i].NIF = F[i+1].NIF;
-            F[i].veiculo = F[i+1].veiculo;
-            F[i].tempo = F[i+1].tempo;
-            F[i].distancia = F[i+1].distancia;
-        }
-        return(1);
-    }else return(0);
-}
  
 //MENU
 int menu(){
@@ -143,10 +123,7 @@ int main(){
     int nif,cod,temp,dist = 0;
     int nord=0;
     int tamanhov,tamanhof = 0;
-    int codF, resF = 0;
-    int num_ordem = 0;
-    int cal_custo = 0;
-    setlocale(LC_ALL, "Portuguese");
+
     do{
         opcao = menu();
         switch(opcao){
@@ -163,7 +140,7 @@ int main(){
                 };
                 printf("Inserir tipo:\n");
                 scanf("%s", tipov);        
-                printf("Inserir custo (custo abaixo de 1 tem de ser inserido com virgula):\n");
+                printf("Inserir custo:\n");
                 scanf("%f", &custov);
                 if(custov<0){
                     printf("Custo tem de ser a cima de 0!\n");
@@ -198,10 +175,6 @@ int main(){
                 againcodveiculo:
                 printf("Codigo:");
                 scanf("%d", &cod);
-                printf("Codigos Disponiveis:");
-                for(int h=0; h<tamanhov;h++){
-                   printf("%d\n",veiculo[h].codigo);
-                }
                 //verificação se codigo existe 
                 for(int i = 0; i<tamanhov ;i++){
                 if(cod == veiculo[i].codigo){
@@ -225,51 +198,20 @@ int main(){
                 printf("%dnumord", nord);
                 break;
             case 4: 
-                printf("Insira o codigo do Veiculo eletrico que deseja remover:");
-                scanf("%d", &codF);
-                resF = rmFatura(fatura,tamanhof,codF);
-                if(resF==1){
-                    printf("Fatura removida com sucesso!\n");
-                    tamanhof--;
-                } else printf("Fatura não removida!\n");
-                
+            
                 break;
             case 5: 
-                listv(veiculo,tamanhov);
+            listv(veiculo,tamanhov);
                 break;
             case 6: 
-                listf(fatura,tamanhof);
+            listf(fatura,tamanhof);
                 break;
             case 7: 
-            voltarcusto:
-                printf("Número de ordem que deseja?");
-                scanf("%d", &num_ordem);
-                for(int i = 0; i<tamanhof ;i++){
-                    if(num_ordem == fatura[i].num_ord){
-                  
-                    for (int h = 0; h < tamanhov; h++)
-                    {
-                    if (fatura[i].veiculo == veiculo[h].codigo){
-                        printf("t%d\n",fatura[i].tempo);
-                        printf("c%f\n",veiculo[h].custo);
-                        cal_custo = fatura[i].tempo*veiculo[h].custo;
-                    }
-                   
-                    }
-                    
-                }
-                else {
-
-                    printf("Não existe este numero de ordem nas faturas\n");
-                    goto voltarcusto;
-                    }
-
-                }
-                printf("O custo da fatura %d é de: %d \n", num_ordem,cal_custo);
+                
                 break;
         }   
     }while(opcao != 0);
 
     return(0);
 
-} 
+}
