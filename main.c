@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
+#include <locale.h>
 #define fSize 9
 #define vSize 5
 
@@ -143,8 +144,9 @@ int main(){
     int nord=0;
     int tamanhov,tamanhof = 0;
     int codF, resF = 0;
-
-
+    int num_ordem = 0;
+    int cal_custo = 0;
+    setlocale(LC_ALL, "Portuguese");
     do{
         opcao = menu();
         switch(opcao){
@@ -161,7 +163,7 @@ int main(){
                 };
                 printf("Inserir tipo:\n");
                 scanf("%s", tipov);        
-                printf("Inserir custo:\n");
+                printf("Inserir custo (custo abaixo de 1 tem de ser inserido com virgula):\n");
                 scanf("%f", &custov);
                 if(custov<0){
                     printf("Custo tem de ser a cima de 0!\n");
@@ -202,12 +204,12 @@ int main(){
                 }
                 //verificação se codigo existe 
                 for(int i = 0; i<tamanhov ;i++){
-                    if(cod == veiculo[i].codigo){
+                if(cod == veiculo[i].codigo){
                     fatura[tamanhof].veiculo = veiculo[i].codigo;
-                    }else {
-                        printf("Não existe este codigo de veiculo eletrico\n");
-                        goto againcodveiculo;
-                    } 
+                }else {
+                    printf("Não existe este codigo de veiculo eletrico\n");
+                    goto againcodveiculo;
+                } 
                 }
                 printf("tempo:");
                 scanf("%d", &temp);
@@ -239,7 +241,31 @@ int main(){
                 listf(fatura,tamanhof);
                 break;
             case 7: 
-               
+            voltarcusto:
+                printf("Número de ordem que deseja?");
+                scanf("%d", &num_ordem);
+                for(int i = 0; i<tamanhof ;i++){
+                    if(num_ordem == fatura[i].num_ord){
+                  
+                    for (int h = 0; h < tamanhov; h++)
+                    {
+                    if (fatura[i].veiculo == veiculo[h].codigo){
+                        printf("t%d\n",fatura[i].tempo);
+                        printf("c%f\n",veiculo[h].custo);
+                        cal_custo = fatura[i].tempo*veiculo[h].custo;
+                    }
+                   
+                    }
+                    
+                }
+                else {
+
+                    printf("Não existe este numero de ordem nas faturas\n");
+                    goto voltarcusto;
+                    }
+
+                }
+                printf("O custo da fatura %d é de: %d \n", num_ordem,cal_custo);
                 break;
         }   
     }while(opcao != 0);
