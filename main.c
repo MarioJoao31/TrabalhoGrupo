@@ -151,6 +151,7 @@ int main(){
     int codF, resF = 0;
     int num_ordem = 0;
     int cal_custo = 0;
+    int codVeiculo = 0;
     FILE *fp;
     FILE *fp1;
     setlocale(LC_ALL, "Portuguese");
@@ -278,6 +279,7 @@ int main(){
 
                 printf("O custo da fatura %d é de: %d \n", num_ordem,cal_custo);
                 break;
+                
             case 8:
                 for(int o=0; o <tamanhof; o++){
                     for(int j = 0; j < tamanhov; j++){
@@ -290,13 +292,27 @@ int main(){
                 listf(fatura,tamanhof);
 
             break;
+
             case 9:
                 
+                    printf("Codigo do veiculo");
+                    scanf("%d", &codVeiculo);
+                    for(int j=0;j<tamanhov;j++){
 
+                        for(int f=0;f<tamanhof;f++){
+                         if(fatura[f].veiculo == veiculo[j].codigo)   
+                            printf("######Veiculo nº:%d#######",j);
+                            printf("Num_ordem:%d\n",fatura[f].num_ord);
+                            printf("NIF:%d\n",fatura[f].NIF);
+                            printf("Distancia%d\n",fatura[f].distancia);
+                            printf("Codigo:%d\n",veiculo[j].codigo);
+                        }
+                    }
+                 
             break;
             
             case 10:
-                printf("olaola!");
+                
                 fp = fopen("Pedido.txt", "a+");
                 for(int i=0; i<tamanhov;i++){
                     fprintf(fp, "NIF:%d \nVeiculo:%d \nTempo:%d \nDistancia:%d \n", fatura[i].NIF, fatura[i].veiculo, fatura[i].tempo, fatura[i].distancia);
