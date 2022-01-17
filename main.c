@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <locale.h>
 #define fSize 9
@@ -123,11 +124,15 @@ int menu(){
         printf("5 - Listagem dos dados de todos os meios de mobilidade elétrica\n");
         printf("6 - Listagem de todo os pedidos de utilização\n");
         printf("7 - Cálculo do custo associado a um pedido de utilização a partir da indicação do seu número de ordem\n");
+        printf("8 - Distribuição dos meios de mobilidade pelos vários utilizadores\n");
+        printf("9-  Listagem do plano de utilização de um determinado meio de mobilidade elétrica\n");
+        printf("10- Guardar \n");
+        printf("11- Guardar \n");
         printf("0 - Sair\n");
         printf("Opcao?");
         scanf("%d",&opcao); 
     }
-    while ((opcao>7)||(opcao<0));
+    while ((opcao>12)||(opcao<0));
     return(opcao);
 }
 
@@ -146,7 +151,17 @@ int main(){
     int codF, resF = 0;
     int num_ordem = 0;
     int cal_custo = 0;
+    int codVeiculo = 0;
+    FILE *fp;
+    FILE *fp1;
     setlocale(LC_ALL, "Portuguese");
+
+
+
+
+
+
+
     do{
         opcao = menu();
         switch(opcao){
@@ -163,7 +178,7 @@ int main(){
                 };
                 printf("Inserir tipo:\n");
                 scanf("%s", tipov);        
-                printf("Inserir custo (custo abaixo de 1 tem de ser inserido com virgula):\n");
+                printf("Inserir custo (custo abaixo de 1 tem de ser divido com Ponto):\n");
                 scanf("%f", &custov);
                 if(custov<0){
                     printf("Custo tem de ser a cima de 0!\n");
@@ -254,22 +269,74 @@ int main(){
                         printf("c%f\n",veiculo[h].custo);
                         cal_custo = fatura[i].tempo*veiculo[h].custo;
                     }
-                   
                     }
-                    
-                }
-                else {
-
+                }else 
+                    {
                     printf("Não existe este numero de ordem nas faturas\n");
                     goto voltarcusto;
                     }
-
                 }
+
                 printf("O custo da fatura %d é de: %d \n", num_ordem,cal_custo);
                 break;
+                
+            case 8:
+                for(int o=0; o <tamanhof; o++){
+                    for(int j = 0; j < tamanhov; j++){
+                        if (fatura[o].distancia <= veiculo[j].autonomia){
+                            fatura[o].veiculo = veiculo[j].codigo;
+                            veiculo[j].autonomia -= fatura[o].distancia;
+                        }
+                    } 
+                }
+                listf(fatura,tamanhof);
+
+            break;
+
+            case 9:
+                
+                    printf("Codigo do veiculo");
+                    scanf("%d", &codVeiculo);
+                    for(int j=0;j<tamanhov;j++){
+
+                        for(int f=0;f<tamanhof;f++){
+                         if(fatura[f].veiculo == veiculo[j].codigo)   
+                            printf("######Veiculo nº:%d#######",j);
+                            printf("Num_ordem:%d\n",fatura[f].num_ord);
+                            printf("NIF:%d\n",fatura[f].NIF);
+                            printf("Distancia%d\n",fatura[f].distancia);
+                            printf("Codigo:%d\n",veiculo[j].codigo);
+                        }
+                    }
+                 
+            break;
+            
+            case 10:
+                
+                fp = fopen("Pedido.txt", "a+");
+                for(int i=0; i<tamanhov;i++){
+                    fprintf(fp, "NIF:%d \nVeiculo:%d \nTempo:%d \nDistancia:%d \n", fatura[i].NIF, fatura[i].veiculo, fatura[i].tempo, fatura[i].distancia);
+                
+                }
+                fclose(fp);
+                printf("Ficheiros Guardado com Sucesso");
+            break;
+
+            case 11:
+
+                fp1 = fopen("MeiosDeMobilidade.txt", "a+");
+                for(int i=0; i <tamanhov;i++){
+                       fprintf(fp1, "Cod-%d \nTipo:%s \nCusto:%f \nAutonomia:%d \n", veiculo[i].codigo, veiculo[i].tipo, veiculo[i].custo, veiculo[i].autonomia);
+                }
+                
+                fclose(fp1);
+                printf("Ficheiros Guardado com Sucesso");
+
+            break;
         }   
     }while(opcao != 0);
 
     return(0);
-
+  
+   
 } 
