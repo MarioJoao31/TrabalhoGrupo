@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <locale.h>
 #define fSize 9
@@ -123,11 +124,13 @@ int menu(){
         printf("5 - Listagem dos dados de todos os meios de mobilidade elétrica\n");
         printf("6 - Listagem de todo os pedidos de utilização\n");
         printf("7 - Cálculo do custo associado a um pedido de utilização a partir da indicação do seu número de ordem\n");
+        printf("8 - Distribuição dos meios de mobilidade pelos vários utilizadores\n");
+        printf("9-  Listagem do plano de utilização de um determinado meio de mobilidade elétrica\n");
         printf("0 - Sair\n");
         printf("Opcao?");
         scanf("%d",&opcao); 
     }
-    while ((opcao>7)||(opcao<0));
+    while ((opcao>9)||(opcao<0));
     return(opcao);
 }
 
@@ -146,6 +149,7 @@ int main(){
     int codF, resF = 0;
     int num_ordem = 0;
     int cal_custo = 0;
+    int filePedidosUti;
     setlocale(LC_ALL, "Portuguese");
     do{
         opcao = menu();
@@ -254,19 +258,43 @@ int main(){
                         printf("c%f\n",veiculo[h].custo);
                         cal_custo = fatura[i].tempo*veiculo[h].custo;
                     }
-                   
                     }
-                    
-                }
-                else {
-
+                }else 
+                    {
                     printf("Não existe este numero de ordem nas faturas\n");
                     goto voltarcusto;
                     }
-
                 }
+
                 printf("O custo da fatura %d é de: %d \n", num_ordem,cal_custo);
                 break;
+            case 8:
+                for(int o=0; o <tamanhof; o++){
+                    for(int j = 0; j < tamanhov; j++){
+                        if (fatura[o].distancia <= veiculo[j].autonomia){
+                            fatura[o].veiculo = veiculo[j].codigo;
+                            veiculo[j].autonomia -= fatura[o].distancia;
+                        }else{
+
+                        }
+                    } 
+                }
+                listf(fatura,tamanhof);
+
+            break;
+            case 9:
+
+                FILE *filePedidosUti;
+                
+                filePedidosUti = fopen("listaPedidos.txt", "w");
+                //Encontrar onde vou buscar os dados guardados no array para fazer a listagem.
+
+                fprintf(filePedidosUti, "asdsadasd");
+
+                fclose(filePedidosUti);
+                listf(fatura,tamanhof);
+                
+            break;
         }   
     }while(opcao != 0);
 
