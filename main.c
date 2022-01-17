@@ -132,7 +132,7 @@ int menu(){
         printf("Opcao?");
         scanf("%d",&opcao); 
     }
-    while ((opcao>9)||(opcao<0));
+    while ((opcao>12)||(opcao<0));
     return(opcao);
 }
 
@@ -177,7 +177,7 @@ int main(){
                 };
                 printf("Inserir tipo:\n");
                 scanf("%s", tipov);        
-                printf("Inserir custo (custo abaixo de 1 tem de ser inserido com virgula):\n");
+                printf("Inserir custo (custo abaixo de 1 tem de ser divido com Ponto):\n");
                 scanf("%f", &custov);
                 if(custov<0){
                     printf("Custo tem de ser a cima de 0!\n");
@@ -284,8 +284,6 @@ int main(){
                         if (fatura[o].distancia <= veiculo[j].autonomia){
                             fatura[o].veiculo = veiculo[j].codigo;
                             veiculo[j].autonomia -= fatura[o].distancia;
-                        }else{
-
                         }
                     } 
                 }
@@ -296,12 +294,22 @@ int main(){
                 
 
             break;
-
+            
             case 10:
+                printf("olaola!");
+                fp = fopen("Pedido.txt", "w");
+                fprintf(fp, "%d \n, %d \n, %d \n, %d \n", fatura[0].NIF, fatura[1].veiculo, fatura[2].tempo, fatura[3].distancia);
+                fclose(fp);
+                
+            break;
+
+            case 11:
+
                 fp1 = fopen("MeiosDeMobilidade.txt", "w+");
                 fprintf(fp1, "This is testing for fprintf...\n");
                 fputs("This is testing for fputs...\n", fp1);
                 fclose(fp1);
+
             break;
         }   
     }while(opcao != 0);
