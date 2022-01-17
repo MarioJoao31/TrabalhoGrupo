@@ -297,18 +297,24 @@ int main(){
             
             case 10:
                 printf("olaola!");
-                fp = fopen("Pedido.txt", "w");
-                fprintf(fp, "%d \n, %d \n, %d \n, %d \n", fatura[0].NIF, fatura[1].veiculo, fatura[2].tempo, fatura[3].distancia);
-                fclose(fp);
+                fp = fopen("Pedido.txt", "a+");
+                for(int i=0; i<tamanhov;i++){
+                    fprintf(fp, "NIF:%d \nVeiculo:%d \nTempo:%d \nDistancia:%d \n", fatura[i].NIF, fatura[i].veiculo, fatura[i].tempo, fatura[i].distancia);
                 
+                }
+                fclose(fp);
+                printf("Ficheiros Guardado com Sucesso");
             break;
 
             case 11:
 
-                fp1 = fopen("MeiosDeMobilidade.txt", "w+");
-                fprintf(fp1, "This is testing for fprintf...\n");
-                fputs("This is testing for fputs...\n", fp1);
+                fp1 = fopen("MeiosDeMobilidade.txt", "a+");
+                for(int i=0; i <tamanhov;i++){
+                       fprintf(fp1, "Cod-%d \nTipo:%s \nCusto:%f \nAutonomia:%d \n", veiculo[i].codigo, veiculo[i].tipo, veiculo[i].custo, veiculo[i].autonomia);
+                }
+                
                 fclose(fp1);
+                printf("Ficheiros Guardado com Sucesso");
 
             break;
         }   
