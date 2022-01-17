@@ -126,6 +126,8 @@ int menu(){
         printf("7 - Cálculo do custo associado a um pedido de utilização a partir da indicação do seu número de ordem\n");
         printf("8 - Distribuição dos meios de mobilidade pelos vários utilizadores\n");
         printf("9-  Listagem do plano de utilização de um determinado meio de mobilidade elétrica\n");
+        printf("10- Guardar \n");
+        printf("11- Guardar \n");
         printf("0 - Sair\n");
         printf("Opcao?");
         scanf("%d",&opcao); 
@@ -149,8 +151,16 @@ int main(){
     int codF, resF = 0;
     int num_ordem = 0;
     int cal_custo = 0;
-    int filePedidosUti;
+    FILE *fp;
+    FILE *fp1;
     setlocale(LC_ALL, "Portuguese");
+
+
+
+
+
+
+
     do{
         opcao = menu();
         switch(opcao){
@@ -283,21 +293,20 @@ int main(){
 
             break;
             case 9:
-
-                FILE *filePedidosUti;
                 
-                filePedidosUti = fopen("listaPedidos.txt", "w");
-                //Encontrar onde vou buscar os dados guardados no array para fazer a listagem.
 
-                fprintf(filePedidosUti, "asdsadasd");
+            break;
 
-                fclose(filePedidosUti);
-                listf(fatura,tamanhof);
-                
+            case 10:
+                fp1 = fopen("MeiosDeMobilidade.txt", "w+");
+                fprintf(fp1, "This is testing for fprintf...\n");
+                fputs("This is testing for fputs...\n", fp1);
+                fclose(fp1);
             break;
         }   
     }while(opcao != 0);
 
     return(0);
-
+  
+   
 } 
